@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { background: #0F241A; color: #F9F8F5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+::selection { background: #D4AF37; color: #0F241A; }
+:focus-visible { outline: 2px solid #D4AF37; outline-offset: 3px; }
+
+@layer utilities {
+  .glass { @apply bg-white/[0.06] backdrop-blur-md border border-white/10; }
+  .glass-strong { @apply bg-forest/70 backdrop-blur-xl border border-gold/20; }
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .text-shadow-soft { text-shadow: 0 2px 30px rgba(0,0,0,.55); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
