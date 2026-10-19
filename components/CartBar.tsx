@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MessageCircle, Minus, Plus, ShoppingBag, X } from "lucide-react";
+import FoodImage from "./FoodImage";
 import { useShop } from "@/context/ShopContext";
 import { fmt } from "@/lib/data";
 import { buildOrderMessage, waLink } from "@/lib/whatsapp";
@@ -63,7 +64,7 @@ export default function CartBar() {
               <ul className="no-scrollbar mt-5 flex-1 space-y-4 overflow-y-auto">
                 {lines.map(({ dish, qty }) => (
                   <li key={dish.id} className="flex items-center gap-4">
-                    <img src={dish.image} alt="" className="h-14 w-14 rounded-2xl object-cover" />
+                    <FoodImage src={dish.image} alt={dish.name} className="h-14 w-14 shrink-0 rounded-2xl object-cover" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-medium">{dish.name}</p>
                       <p className="text-sm text-gold">{fmt(dish.price * qty)}</p>

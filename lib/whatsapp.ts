@@ -20,15 +20,7 @@ export interface Booking {
 }
 
 export function buildReservationMessage(b: Booking) {
-  return [
-    "*Table Reservation Request: Coconut Grove*",
-    `Name: ${b.name}`,
-    `Seating: ${b.zone}`,
-    `Date: ${b.date}`,
-    `Time: ${b.time}`,
-    `Guests: ${b.guests}`,
-    b.notes ? `Special requests: ${b.notes}` : null,
-    "",
-    "Please confirm availability. Thank you!",
-  ].filter((l) => l !== null).join("\n");
+  const guests = `${b.guests} ${b.guests === 1 ? "guest" : "guests"}`;
+  const base = `Hi Coconut Grove, I would like to reserve a table for ${guests} on ${b.date} at ${b.time} in ${b.zone}. Name: ${b.name}`;
+  return b.notes ? `${base}\nSpecial requests: ${b.notes}` : base;
 }

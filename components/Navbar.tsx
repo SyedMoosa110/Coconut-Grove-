@@ -8,9 +8,9 @@ import type { Category } from "@/lib/data";
 
 const LINKS: { label: string; href: string; category?: Category }[] = [
   { label: "Experience", href: "#experience" },
-  { label: "BBQ", href: "#menu", category: "BBQ" },
+  { label: "BBQ", href: "#menu", category: "BBQ & Grills" },
   { label: "Steaks", href: "#menu", category: "Steaks & Continental" },
-  { label: "Pizza", href: "#menu", category: "Gourmet Pizza" },
+  { label: "Pizza & Burgers", href: "#menu", category: "Wood-Fired Pizza & Burgers" },
   { label: "Visit", href: "#visit" },
 ];
 
@@ -50,9 +50,12 @@ export default function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <a href="#reserve" className="relative rounded-full bg-gold px-4 py-2 text-sm font-semibold text-forest animate-glow sm:px-5">
-            Book Table
-          </a>
+          <span className="relative inline-flex">
+            <span aria-hidden className="absolute inset-0 rounded-full border border-gold/70 animate-ping2" />
+            <a href="#reserve" className="relative rounded-full bg-gold px-4 py-2 text-sm font-semibold text-forest animate-glow sm:px-5">
+              Book Table
+            </a>
+          </span>
           <button onClick={() => setOpen((o) => !o)} aria-label="Toggle menu" aria-expanded={open} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 md:hidden">
             {open ? <X size={18} /> : <MenuIcon size={18} />}
           </button>
@@ -72,6 +75,9 @@ export default function Navbar() {
                 <a href={l.href} onClick={() => go(l.category)} className="block rounded-2xl px-4 py-3.5 text-lg text-cream/90 active:bg-white/10">{l.label}</a>
               </li>
             ))}
+            <li>
+              <a href="tel:+923057774444" className="block rounded-2xl px-4 py-3.5 text-lg text-gold active:bg-white/10">Call +92 305 7774444</a>
+            </li>
           </motion.ul>
         )}
       </AnimatePresence>

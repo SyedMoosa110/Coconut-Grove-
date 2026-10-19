@@ -5,26 +5,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown, Star } from "lucide-react";
 import SplitText from "./SplitText";
 import Magnetic from "./Magnetic";
+import FairyLights from "./FairyLights";
 import { HERO_IMAGES, HERO_VIDEO } from "@/lib/data";
-
-function Fireflies() {
-  const dots = Array.from({ length: 24 }, (_, i) => ({
-    left: (i * 47) % 100, top: (i * 29 + 13) % 100, size: 2 + (i % 4), dur: 6 + (i % 5) * 2, delay: (i % 7) * 0.6,
-  }));
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      {dots.map((d, i) => (
-        <motion.span
-          key={i}
-          className="absolute rounded-full bg-gold blur-[1px]"
-          style={{ left: `${d.left}%`, top: `${d.top}%`, width: d.size, height: d.size }}
-          animate={{ y: [0, -44, 0], x: [0, 14, -8, 0], opacity: [0.1, 0.85, 0.1] }}
-          transition={{ duration: d.dur, delay: d.delay, repeat: Infinity, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-}
 
 export default function Hero() {
   const [i, setI] = useState(0);
@@ -52,7 +34,8 @@ export default function Hero() {
       </div>
       <div className="absolute inset-0 bg-gradient-to-b from-forest/80 via-forest/45 to-forest" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_70%,rgba(212,175,55,0.16),transparent_55%)]" />
-      <Fireflies />
+      <div aria-hidden className="pointer-events-none absolute -left-24 bottom-0 h-96 w-96 animate-pulse rounded-full bg-gold/10 blur-[110px]" />
+      <FairyLights count={30} />
 
       <div className="relative mx-auto w-full max-w-6xl px-5 pb-24 pt-32 sm:px-8">
         <motion.div

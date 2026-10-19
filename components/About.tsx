@@ -3,6 +3,7 @@
 import { useRef, useState } from "react";
 import { animate, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Moon, Sun } from "lucide-react";
+import FairyLights from "./FairyLights";
 import { DAY_IMAGE, GALLERY, NIGHT_IMAGE } from "@/lib/data";
 
 function DayNight() {
@@ -51,8 +52,9 @@ export default function About() {
   const scrollBy = (dir: 1 | -1) => rail.current?.scrollBy({ left: dir * 420, behavior: "smooth" });
 
   return (
-    <section id="experience" className="relative py-28">
+    <section id="experience" className="relative overflow-hidden py-28">
       <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-[70%] -translate-x-1/2 rounded-full bg-gold/10 blur-[120px]" />
+      <FairyLights count={20} seed={7} className="opacity-70" />
       <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <motion.h2

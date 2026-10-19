@@ -20,7 +20,7 @@ interface ShopCtx {
 const Ctx = createContext<ShopCtx | null>(null);
 
 export function ShopProvider({ children }: { children: ReactNode }) {
-  const [category, setCategory] = useState<Category>("BBQ");
+  const [category, setCategory] = useState<Category>("BBQ & Grills");
   const [qty, setQty] = useState<Record<string, number>>({});
   const [drawerOpen, setDrawerOpen] = useState(false);
 

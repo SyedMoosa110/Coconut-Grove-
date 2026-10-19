@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Armchair, Check, Crown, MessageCircle, Minus, Plus, Tent } from "lucide-react";
+import FairyLights from "./FairyLights";
 import { TIME_SLOTS, ZONES, type ZoneId } from "@/lib/data";
 import { buildReservationMessage, waLink } from "@/lib/whatsapp";
 
@@ -60,6 +61,7 @@ export default function Reservation() {
 
   return (
     <section id="reserve" className="relative overflow-hidden py-28">
+      <FairyLights count={14} seed={3} className="opacity-60" />
       <div className="pointer-events-none absolute -right-40 top-10 h-[30rem] w-[30rem] rounded-full bg-gold/10 blur-[130px]" />
       <div className="relative mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>

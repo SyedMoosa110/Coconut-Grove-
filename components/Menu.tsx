@@ -4,6 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useMotionTemplate, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Info, Minus, Plus, X } from "lucide-react";
 import { CATEGORIES, DISHES, fmt, type Badge, type Dish } from "@/lib/data";
+import FoodImage from "./FoodImage";
 import { useShop } from "@/context/ShopContext";
 
 const BADGE_STYLE: Record<Badge, string> = {
@@ -21,6 +22,8 @@ function TiltCard({ dish, index }: { dish: Dish; index: number }) {
   const my = useMotionValue(0.5);
   const rotateX = useSpring(useTransform(my, [0, 1], [7, -7]), { stiffness: 200, damping: 18 });
   const rotateY = useSpring(useTransform(mx, [0, 1], [-7, 7]), { stiffness: 200, damping: 18 });
+  const ix = useSpring(useTransform(mx, [0, 1], [12, -12]), { stiffness: 150, damping: 20 });
+  const iy = useSpring(useTransform(my, [0, 1], [10, -10]), { stiffness: 150, damping: 20 });
   const px = useTransform(mx, (v) => v * 100);
   const py = useTransform(my, (v) => v * 100);
   const glare = useMotionTemplate`radial-gradient(320px circle at ${px}% ${py}%, rgba(212,175,55,0.22), transparent 65%)`;
@@ -42,7 +45,7 @@ function TiltCard({ dish, index }: { dish: Dish; index: number }) {
       className="group relative overflow-hidden rounded-3xl border border-white/10 bg-charcoal transition-[border-color,box-shadow] duration-500 hover:border-gold/70 hover:shadow-[0_0_40px_-6px_rgba(212,175,55,0.45)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden">
-        <img src={dish.image} alt={dish.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-110" />
+        <motion.div style={{ x: ix, y: iy, scale: 1.14 }} className="h-full w-full"><FoodImage src={dish.image} alt={dish.name} className="h-full w-full object-cover transition-transform duration-[1200ms] group-hover:scale-105" /></motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-transparent" />
         <div className="absolute left-3 top-3 flex flex-wrap gap-2">
           {dish.badges.map((b) => (
@@ -121,7 +124,7 @@ export default function Menu() {
         >
           The menu
         </motion.h2>
-        <p className="mt-4 max-w-lg text-cream/70">Tap a dish to build your order. We prepare the list for WhatsApp, you send it in one tap.</p>
+        <p className="mt-4 max-w-lg text-cream/70">Browse five collections, then tap a dish to build your order. We prepare the list for WhatsApp, you send it in one tap.</p>
 
         <div role="tablist" className="no-scrollbar -mx-5 mt-10 flex gap-2 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
           {CATEGORIES.map((c) => (

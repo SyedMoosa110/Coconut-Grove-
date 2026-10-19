@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Car, Clock, MapPin, Navigation, Phone } from "lucide-react";
-import { HOURS, MAPS_QUERY, PHONE_DISPLAY, PHONE_TEL } from "@/lib/data";
+import { HOURS, MAPS_QUERY, PHONE_DISPLAY } from "@/lib/data";
 import { getStatus } from "@/lib/status";
 
 function StatusBadge() {
@@ -58,7 +58,7 @@ export default function Location() {
     { label: "Google Maps", href: `https://www.google.com/maps/search/?api=1&query=${q}`, icon: Navigation },
     { label: "Uber", href: "https://m.uber.com/", icon: Car },
     { label: "Careem", href: "https://www.careem.com/", icon: Car },
-    { label: "Call us", href: `tel:${PHONE_TEL}`, icon: Phone },
+    { label: "Call us", href: "tel:+923057774444", icon: Phone },
   ];
 
   return (
@@ -91,7 +91,7 @@ export default function Location() {
                 </a>
               ))}
             </div>
-            <p className="text-sm text-cream/60">Reservations and orders: {PHONE_DISPLAY} (calls and WhatsApp).</p>
+            <a href="tel:+923057774444" className="text-sm text-cream/60 hover:text-gold">Reservations and orders: {PHONE_DISPLAY} (calls and WhatsApp)</a>
           </div>
         </div>
       </div>
