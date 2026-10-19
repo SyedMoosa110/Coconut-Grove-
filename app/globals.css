@@ -1,19 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
-body { background: #0F241A; color: #F9F8F5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-::selection { background: #D4AF37; color: #0F241A; }
-:focus-visible { outline: 2px solid #D4AF37; outline-offset: 3px; }
-
-@layer utilities {
-  .glass { @apply bg-white/[0.06] backdrop-blur-md border border-white/10; }
-  .glass-strong { @apply bg-forest/70 backdrop-blur-xl border border-gold/20; }
-  .no-scrollbar { scrollbar-width: none; }
-  .no-scrollbar::-webkit-scrollbar { display: none; }
-  .text-shadow-soft { text-shadow: 0 2px 30px rgba(0,0,0,.55); }
+:root {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+  --gold: #D4AF37;
 }
+
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+body { background: #07140E; color: #F9F8F5; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+::selection { background: #D4AF37; color: #07140E; }
+:focus-visible { outline: 2px solid #D4AF37; outline-offset: 3px; }
+body.scroll-locked { overflow: hidden; }
+
+/* Film grain over everything: adds the cinematic tooth to flat gradients */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .055; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Custom cursor takes over only on real mouse devices (class added by CustomCursor) */
+html.has-cursor, html.has-cursor * { cursor: none !important; }
+html.has-cursor input, html.has-cursor textarea { cursor: text !important; }
+
+.glass { background: rgba(255,255,255,.05); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,.1); }
+.glass-strong { background: rgba(7,20,14,.62); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(212,175,55,.2); }
+
+/* 1px gold shimmer border that sweeps around on hover / focus / active */
+.gold-border { position: relative; }
+.gold-border::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 5;
+  background: linear-gradient(115deg, transparent 20%, rgba(212,175,55,.9) 40%, rgba(255,243,196,1) 50%, rgba(212,175,55,.9) 60%, transparent 80%);
+  background-size: 250% 100%; background-position: 100% 0;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .6s var(--ease-luxe);
+}
+.gold-border:hover::before, .gold-border:focus-within::before, .gold-border[data-active="true"]::before { opacity: 1; animation: borderSweep 2.8s linear infinite; }
+@keyframes borderSweep { to { background-position: -150% 0; } }
+
+.text-gold-gradient {
+  background: linear-gradient(100deg, #B8932B 0%, #F3E3A6 35%, #D4AF37 60%, #F3E3A6 85%);
+  background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: sheen 7s linear infinite;
+}
+@keyframes sheen { to { background-position: -200% 0; } }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.text-shadow-soft { text-shadow: 0 2px 40px rgba(0,0,0,.6); }
+.tilt-layer { transform: translateZ(40px); }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(.8) sepia(1) saturate(4) hue-rotate(5deg); cursor: pointer; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

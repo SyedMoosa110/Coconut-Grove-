@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import FairyCanvas from "./FairyCanvas";
+import Magnetic from "./Magnetic";
+import SplitText from "./SplitText";
 import { Car, Clock, MapPin, Navigation, Phone } from "lucide-react";
-import { HOURS, MAPS_QUERY, PHONE_DISPLAY } from "@/lib/data";
+import { HOURS, MAPS_QUERY, PHONE_DISPLAY, PHONE_HREF } from "@/lib/data";
 import { getStatus } from "@/lib/status";
 
 function StatusBadge() {
@@ -28,7 +31,7 @@ function StatusBadge() {
 
 function StyledMap() {
   return (
-    <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-gold/20 bg-[#0B1A12] sm:aspect-[16/10]">
+    <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-gold/20 bg-forest sm:aspect-[16/10]">
       <svg viewBox="0 0 800 500" className="absolute inset-0 h-full w-full" role="img" aria-label="Stylised map showing Coconut Grove">
         <defs>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#D4AF37" strokeOpacity=".06" /></pattern>
@@ -45,7 +48,7 @@ function StyledMap() {
       <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[85%]">
         <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }} className="flex flex-col items-center">
           <span className="glass-strong mb-2 whitespace-nowrap rounded-full px-4 py-1.5 text-sm">Coconut Grove</span>
-          <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-forest shadow-[0_0_30px_rgba(212,175,55,0.7)]"><MapPin size={22} /></span>
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-gold text-obsidian shadow-[0_0_30px_rgba(212,175,55,0.7)]"><MapPin size={22} /></span>
         </motion.div>
       </div>
     </div>
@@ -58,23 +61,22 @@ export default function Location() {
     { label: "Google Maps", href: `https://www.google.com/maps/search/?api=1&query=${q}`, icon: Navigation },
     { label: "Uber", href: "https://m.uber.com/", icon: Car },
     { label: "Careem", href: "https://www.careem.com/", icon: Car },
-    { label: "Call us", href: "tel:+923057774444", icon: Phone },
+    { label: "Call us", href: PHONE_HREF, icon: Phone },
   ];
 
   return (
-    <section id="visit" className="relative py-28">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+    <section id="visit" className="relative overflow-hidden bg-obsidian py-28 sm:py-36">
+      <FairyCanvas density={0.6} embers={0.1} className="opacity-60" />
+      <div className="relative mx-auto max-w-6xl px-5 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-5">
-          <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.9 }} className="font-display text-4xl sm:text-6xl">
-            Find the grove
-          </motion.h2>
+          <SplitText text="Find the grove" accent={["grove"]} className="font-display text-[clamp(2.8rem,8vw,6rem)] leading-[0.95]" />
           <StatusBadge />
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <StyledMap />
           <div className="flex flex-col gap-5">
-            <div className="glass rounded-3xl p-6">
+            <div className="glass gold-border rounded-3xl p-6">
               <p className="flex items-center gap-2 font-display text-2xl"><Clock size={18} className="text-gold" /> Opening hours</p>
               <ul className="mt-4 space-y-3">
                 {HOURS.map((h) => (
@@ -86,12 +88,14 @@ export default function Location() {
             </div>
             <div className="grid grid-cols-2 gap-3">
               {actions.map(({ label, href, icon: Icon }) => (
-                <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="glass flex items-center justify-center gap-2 rounded-2xl py-4 text-sm transition-colors hover:border-gold hover:text-gold">
-                  <Icon size={16} />{label}
-                </a>
+                <Magnetic key={label} strength={0.15} className="block">
+                  <a href={href} target={href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" data-cursor={label === "Call us" ? "Call" : "Open"} className="glass gold-border flex items-center justify-center gap-2 rounded-2xl py-4 text-sm transition-colors hover:text-gold">
+                    <Icon size={16} />{label}
+                  </a>
+                </Magnetic>
               ))}
             </div>
-            <a href="tel:+923057774444" className="text-sm text-cream/60 hover:text-gold">Reservations and orders: {PHONE_DISPLAY} (calls and WhatsApp)</a>
+            <a href={PHONE_HREF} className="text-sm text-cream/60 hover:text-gold">Reservations and orders: {PHONE_DISPLAY} (calls and WhatsApp)</a>
           </div>
         </div>
       </div>

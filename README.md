@@ -1,51 +1,26 @@
 # Coconut Grove Karachi
 
-> Tropical garden fine dining restaurant located in Karachi, Pakistan.
-
-## Features
-
-- **Responsive Architecture**: Mobile-first layout crafted with Tailwind CSS and Next.js 14 App Router.
-- **Interactive Menu & Cart**: Filterable menu by categories, item detail modals, and live WhatsApp ordering integration.
-- **Table Reservation System**: Multi-step booking flow with date, time slot, guest count, and seating area selection.
-- **Location & Contact**: Interactive map view, business hours, and direct contact options.
-- **Smooth Micro-interactions**: Custom cursor, subtle entrance animations, and performant state transitions powered by Framer Motion.
-
-## Tech Stack
-
-- **Framework**: [Next.js 14](https://nextjs.org/) (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.17+ or later
-- npm or yarn
-
-### Installation
+Next.js 14 (App Router) · Tailwind CSS · Framer Motion · GSAP
 
 ```bash
 npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (what Vercel runs)
 ```
 
-### Development Server
+## Where things live
 
-Run the development server:
+| Concern | File |
+| --- | --- |
+| Menu, zones, hours, phone, Instagram, images | `lib/data.ts` |
+| WhatsApp message builders | `lib/whatsapp.ts` |
+| Magnetic cursor + halo labels (`data-cursor="Label"`, `data-snap`) | `components/CustomCursor.tsx` |
+| Fairy-light / ember canvas | `components/FairyCanvas.tsx` |
+| 3D tilt + glare | `components/TiltCard.tsx` |
+| Staggered clip-path text reveal | `components/SplitText.tsx` |
+| Slide-to-unlock CTA | `components/SlideToUnlock.tsx` |
+| 4-step reservation | `components/Reservation.tsx` |
+| Day/night slider | `components/AmbienceSlider.tsx` |
 
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to view the application.
-
-### Production Build
-
-Build the project for production:
-
-```bash
-npm run build
-npm run start
-```
+Add `data-cursor="Your label"` to any element to give the halo a label there.
+Items marked `ASSUMED` in `lib/data.ts` (3 dishes, opening hour) were not in the original brief: confirm them.
